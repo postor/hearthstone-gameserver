@@ -1,0 +1,23 @@
+{
+  "name": "hearthstone-gameserver",
+  "version": "1.0.0",
+  "description": "game server for hearthstone",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/postor/hearthstone-gameserver.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/postor/hearthstone-gameserver/issues"
+  },
+  "homepage": "https://github.com/postor/hearthstone-gameserver#readme",
+  "dependencies": {
+    "lodash": "^4.17.4",
+    "uuid": "^3.0.1"
+  }
+}
