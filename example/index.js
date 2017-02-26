@@ -1,6 +1,10 @@
-import GameScene from '../'
+import GameScene from '../index'
 
 var game = new GameScene()
-game.on('event',(obj)=>{
-  console.log(obj)
+game.startGame()
+.then((gameResult)=>{
+  console.log(['game over!',gameResult])
+})
+.catch((err)=>{
+  console.log(['error!',console.log(err)])
 })

@@ -1,2 +1,4 @@
 import GameScene from './lib/GameScene'
-export default GameScene
+import EventTypes from './lib/EventTypes'
+
+export {GameScene as default,EventTypes}
