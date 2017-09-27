@@ -1,11 +1,9 @@
-import Trigger from '../triggers/Base'
 import Player from '../Player'
-import Skill from '../skills/Base'
+import Trigger from '../triggers/Base'
 
 export default class Base extends Trigger {
-  resource: string
+  static key: string
   player: Player
-  skill: Skill
 
   constructor(player: Player) {
     super(player.game)
