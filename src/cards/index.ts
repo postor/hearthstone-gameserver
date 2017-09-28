@@ -1,14 +1,18 @@
 
 import Player from '../Player'
 import Base from './Base'
+import CardFromData from '../utils/CardFromData'
+
 import Coin from './Coin'
 import BabblingBook from './BabblingBook'
-import CardFromData from '../utils/CardFromData'
+import QuestingAdventurer from './QuestingAdventurer'
+
 
 
 export const map: any = {
   Coin,
   BabblingBook,
+  QuestingAdventurer,
 }
 
 export default function getCard(player: Player, cardClassName: string = 'BabblingBook', from: CardFromData = new CardFromData()): Base {

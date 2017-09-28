@@ -7,7 +7,7 @@ const initDrawCardCount = 3
 /**
  * 初始牌交换等待时间：3秒
  */
-const initCardChangeTimeout = 30000
+const initCardChangeTimeout = 5000
 
 /**
  * 手牌上限：10张

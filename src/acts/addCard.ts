@@ -14,7 +14,7 @@ export default function (player: Player, card: Card, notifyType: string = Notify
   player.game.emit(
     'notify',
     new Notify(
-      `card ${card.title} added to hand`,
+      `card ${card.title} added to player${player.id}'s hand`,
       notifyType,
       card,
     ).toObject()

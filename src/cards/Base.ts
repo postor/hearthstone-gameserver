@@ -27,11 +27,12 @@ export default class CardBase extends Trigger {
 
   }
 
-  toObject() {    
+  toObject() {
+    const servant = this.servant ? this.servant.toObject() : undefined
     return {
-      player:this.player.id,
-      from:this.from.toObject(),
-      servant:this.servant.toObject()
+      player: this.player.id,
+      from: this.from.toObject(),
+      servant,
     }
   }
 }

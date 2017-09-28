@@ -1,4 +1,4 @@
-import * as EventEmitter from 'events'
+import { EventEmitter } from 'events'
 import Player from './Player'
 import Card from './cards/Base'
 import DeadQueueItem from './utils/DeadQueueItem'
@@ -10,14 +10,14 @@ const defaultConfig = {
       hero: 'Mage',
       cards: [
         'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
-        'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
+        'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
       ],
     },
     {
       hero: 'Mage',
       cards: [
         'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
-        'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
+        'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
       ],
     }
   ]
@@ -82,8 +82,10 @@ export default class Game extends EventEmitter {
       return new Player(this, x.hero, x.cards, i)
     })
     this.players.forEach((x) => x.game = this)
-    gameStart(this)
-    this.tick()
+    setTimeout(() => {
+      gameStart(this)
+      this.tick()
+    }, 100)
   }
 
   tick() {
@@ -92,6 +94,7 @@ export default class Game extends EventEmitter {
       setTimeout(() => {
         this.tick()
       }, 100)
+      return
     }
 
     //处理

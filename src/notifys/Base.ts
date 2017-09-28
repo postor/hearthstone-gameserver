@@ -3,7 +3,7 @@ export default class Base {
   type: string
   data: any
 
-  constructor(message: string, type: string, data: any) {
+  constructor(message: string, type: string, data: any = undefined) {
     this.message = message
     this.type = type
     this.data = data

@@ -2,14 +2,23 @@ import Game from '../Game'
 import changeCard from './changeCard'
 import drawCard from './drawCard'
 import addCardByName from './addCardByName'
-import nextTurn from './nextTurn'
-import CardFromData from '../utils/CardFromData'
-import UserActionEnums from '../utils/UserActionEnum'
+import beforeTurn from './beforeTurn'
 import shuffle from '../utils/shuffle'
 import config from '../config'
+import Notify from '../notifys/Base'
+import NotifyEnum from '../utils/NotifyEnum'
+import CardFromData from '../utils/CardFromData'
+import UserActionEnums from '../utils/UserActionEnum'
 
 
 export default function (game: Game) {
+  game.emit(
+    'notify',
+    new Notify(
+      `game start`,
+      NotifyEnum.gameStart,
+    ).toObject()
+  )
   //shuffle first
   game.players.forEach((player) => {
     shuffle(player.storeCards)
@@ -28,12 +37,12 @@ export default function (game: Game) {
   const firstPlayerIndex = Math.round(Math.random())
   game.currentPlayer = game.players[firstPlayerIndex]
   game.todoQueue.unshift(() => {
-    game.currentPlayer.getEnemy()
+    drawCard(game.currentPlayer.getEnemy())
   })
 
   //wait
   let waiting = true
-  return Promise.race([new Promise((resolve, reject) => {
+  Promise.race([new Promise((resolve, reject) => {
     //30秒内有效否则换牌信号会被丢弃
     setTimeout(() => {
       waiting = false
@@ -51,6 +60,15 @@ export default function (game: Game) {
       resolve()
     })
   })))]).then(() => {
+
+    game.emit(
+      'notify',
+      new Notify(
+        `init card exchange end`,
+        NotifyEnum.initCardExchangeEnd,
+      ).toObject()
+    )
+
     //后出手的给一个法力水晶作为补偿
     game.todoQueue.push(() => {
       addCardByName(game.currentPlayer.getEnemy(), 'Coin', new CardFromData())
@@ -58,7 +76,7 @@ export default function (game: Game) {
 
     //开始下一回合
     game.todoQueue.push(() => {
-      nextTurn(this)
+      beforeTurn(game)
     })
   }).catch(console.log)
 }

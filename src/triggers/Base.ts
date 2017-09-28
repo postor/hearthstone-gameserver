@@ -12,12 +12,14 @@ export default class Base {
   constructor(game: Game) {
     this.game = game
 
+    /*
     getTriggerEnumArray().map((x) => {
       this.game.on(`trigger_${x}`, (data) => {
         const checkMethodName = `check${x}`, onMethodName = `on${x}`
         this[checkMethodName] && this[onMethodName] && this[checkMethodName](data) && this[onMethodName](data)
       })
     })
+    */
   }
 
   onBeforeAttark(data: BeforeAttark) { }
