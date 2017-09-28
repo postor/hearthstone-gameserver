@@ -1,7 +1,6 @@
-enum BuffTypeEnum {
-  CardCost = 'CardCost',
-  BattleCry = 'BattleCry',
-  DeathRattle = 'DeathRattle',
+const BuffTypeEnum = {
+  CardCost: 'CardCost',
+  BattleCry: 'BattleCry',
+  DeathRattle: 'DeathRattle',
 }
-
 export default BuffTypeEnum

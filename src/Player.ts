@@ -47,7 +47,7 @@ export default class Player extends Trigger {
    * @type {Card[]}
    * @memberof Player
    */
-  storeCards: Card[]
+  storeCards: Card[] = []
 
   /**
    * 手上的卡牌
@@ -55,7 +55,7 @@ export default class Player extends Trigger {
    * @type {Card[]}
    * @memberof Player
    */
-  handCards: Card[]
+  handCards: Card[] = []
 
   /**
    * 战场上的随从
@@ -63,7 +63,7 @@ export default class Player extends Trigger {
    * @type {Servant[]}
    * @memberof Player
    */
-  fieldServants: Servant[]
+  fieldServants: Servant[] = []
 
   /**
    * 奥秘
@@ -71,7 +71,7 @@ export default class Player extends Trigger {
    * @type {Secret[]}
    * @memberof Player
    */
-  secrets: Secret[]
+  secrets: Secret[] = []
 
   /**
    * 状态（克苏恩、子弹上膛）
@@ -79,7 +79,7 @@ export default class Player extends Trigger {
    * @type {Buff[]}
    * @memberof Player
    */
-  buffs: Buff[]
+  buffs: Buff[] = []
 
 
   /**
@@ -90,11 +90,30 @@ export default class Player extends Trigger {
    */
   game: Game
 
-  constructor(game: Game, hero: string, store: string[]) {
+  /**
+   * 编号、index
+   * 
+   * @type {number}
+   * @memberof Player
+   */
+  id: number
+
+  constructor(game: Game, hero: string, store: string[], id: number) {
     super(game)
     this.hero = getHero(this, hero)
     this.storeCards = store.map((x) => {
       return getCard(this, x)
     })
+    this.id = id
+  }
+
+  /**
+   * 获取敌方player
+   * 
+   * @returns 
+   * @memberof Player
+   */
+  getEnemy() {
+    return this.game.players.filter((x) => x !== this)[0]
   }
 }

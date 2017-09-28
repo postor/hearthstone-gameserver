@@ -4,7 +4,8 @@
   "description": "game server for hearthstone",
   "main": "index.js",
   "scripts": {
-    "test": "node node_modules/babel-cli/bin/babel-node.js example/index.js"
+    "build": "tsc",
+    "test": "tsc && node dist/test/index.js"
   },
   "repository": {
     "type": "git",

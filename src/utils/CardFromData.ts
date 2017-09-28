@@ -8,4 +8,11 @@ export default class CardFromData {
     this.type = type
     this.createdBy = createdBy
   }
+
+  toObject() {
+    return {
+      type: this.type,
+      createdBy: this.createdBy,
+    }
+  }
 }

@@ -3,7 +3,6 @@ import Player from './Player'
 import Card from './cards/Base'
 import DeadQueueItem from './utils/DeadQueueItem'
 import gameStart from './acts/gameStart'
-import nextTurn from './acts/nextTurn'
 
 const defaultConfig = {
   players: [
@@ -38,7 +37,7 @@ export default class Game extends EventEmitter {
    * @type {Player[]}
    * @memberof Game
    */
-  players: Player[]
+  players: Player[] = []
 
   /**
    * 当前回合
@@ -54,7 +53,7 @@ export default class Game extends EventEmitter {
    * @type {DeadQueueItem[]}
    * @memberof Game
    */
-  deadQueue: DeadQueueItem[]
+  deadQueue: DeadQueueItem[] = []
 
   /**
    * 排队要做的事情
@@ -62,7 +61,15 @@ export default class Game extends EventEmitter {
    * @type {Function[]}
    * @memberof Game
    */
-  todoQueue: Function[]
+  todoQueue: Function[] = []
+
+  /**
+   * 当前
+   * 
+   * @type {Player}
+   * @memberof Game
+   */
+  currentPlayer: Player
 
   /**
    * Creates an instance of Game.
@@ -71,19 +78,20 @@ export default class Game extends EventEmitter {
    */
   constructor(config: { players: Object[] } = defaultConfig) {
     super()
-    this.players = config.players.map((x: { hero: string, cards: string[] }) => {
-      return new Player(this, x.hero, x.cards)
+    this.players = config.players.map((x: { hero: string, cards: string[] }, i) => {
+      return new Player(this, x.hero, x.cards, i)
     })
     this.players.forEach((x) => x.game = this)
     gameStart(this)
+    this.tick()
   }
 
   tick() {
-    //没有事做了下一回合
+    //没有事做了等一下再试
     if (!this.todoQueue.length) {
-      this.todoQueue.push(() => {
-        nextTurn(this)
-      })
+      setTimeout(() => {
+        this.tick()
+      }, 100)
     }
 
     //处理

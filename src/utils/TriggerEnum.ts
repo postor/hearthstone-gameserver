@@ -1,11 +1,11 @@
-enum TriggerEnum {
+type TriggerEnum =
   /**
    * 回合结束
    * 
    * @type {string}
    * @memberof TriggerEnum
    */
-  TurnEnd = 'TurnEnd',
+  'TurnEnd'
 
   /**
    * 回合开始
@@ -13,7 +13,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  TurnBegin = 'TurnBegin',
+  | 'TurnBegin'
 
   /**
    * 使用卡牌（例如法术反制）
@@ -21,7 +21,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  UseCard = 'UseCard',
+  | 'UseCard'
 
   /**
    * 召唤随从（例如夜色镇执法官）
@@ -29,7 +29,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  NewServant = 'NewServant',
+  | 'NewServant'
 
   /**
    * 有角色受到伤害
@@ -37,7 +37,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  Harm = 'Harm',
+  | 'Harm'
 
   /**
    * 杀死
@@ -45,7 +45,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  Kill = 'Kill',
+  | 'Kill'
 
   /**
    * 抽牌
@@ -53,7 +53,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  DrawCard = 'DrawCard',
+  | 'DrawCard'
 
   /**
    * 攻击前
@@ -61,9 +61,7 @@ enum TriggerEnum {
    * @type {string}
    * @memberof TriggerEnum
    */
-  BeforeAttark = 'BeforeAttark',
-
-}
+  | 'BeforeAttark'
 
 export default TriggerEnum
 
@@ -75,13 +73,13 @@ export default TriggerEnum
 */
 export function getArray() {
   return [
-    TriggerEnum.BeforeAttark,
-    TriggerEnum.DrawCard,
-    TriggerEnum.Harm,
-    TriggerEnum.Kill,
-    TriggerEnum.NewServant,
-    TriggerEnum.TurnBegin,
-    TriggerEnum.TurnEnd,
-    TriggerEnum.UseCard,
+    'BeforeAttark',
+    'DrawCard',
+    'Harm',
+    'Kill',
+    'NewServant',
+    'TurnBegin',
+    'TurnEnd',
+    'UseCard',
   ]
 }

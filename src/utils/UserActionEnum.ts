@@ -1,3 +1,7 @@
-export default {
-  ChangeCards: 'ChangeCards'
+const UserActionEnum = {
+  ChangeCards: 'ChangeCards',
+  UseCard: 'UseCard',
+  EndTurn: 'EndTurn',
 }
+
+export default UserActionEnum
