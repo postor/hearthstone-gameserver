@@ -1,7 +1,4 @@
 import Player from '../Player'
-import changeCard from './changeCard'
-import UserActionEnums from '../utils/UserActionEnum'
-import shuffle from '../utils/shuffle'
 import CardFromData from '../utils/CardFromData'
 import getCard from '../cards'
 import addCard from './addCard'

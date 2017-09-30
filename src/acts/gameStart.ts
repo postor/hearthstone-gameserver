@@ -9,6 +9,7 @@ import Notify from '../notifys/Base'
 import NotifyEnum from '../utils/NotifyEnum'
 import CardFromData from '../utils/CardFromData'
 import UserActionEnums from '../utils/UserActionEnum'
+import timeoutPromise from '../utils/timeoutPromise'
 
 
 export default function (game: Game) {
@@ -17,7 +18,7 @@ export default function (game: Game) {
     new Notify(
       `game start`,
       NotifyEnum.gameStart,
-    ).toObject()
+    )
   )
   //shuffle first
   game.players.forEach((player) => {
@@ -40,26 +41,30 @@ export default function (game: Game) {
     drawCard(game.currentPlayer.getEnemy())
   })
 
-  //wait
-  let waiting = true
-  Promise.race([new Promise((resolve, reject) => {
-    //30秒内有效否则换牌信号会被丢弃
-    setTimeout(() => {
-      waiting = false
-      resolve()
-    }, config.initCardChangeTimeout)
-  }), Promise.all(game.players.map((player, i) => new Promise((resolve, reject) => {
-    //30秒之前双方都交换完成则提前进入回合阶段
-    game.once(`player${i}:${UserActionEnums.ChangeCards}`, (data = {}) => {
-      const cardIndexes: number[] = data.cardIndexes || []
-      cardIndexes.forEach((x) => {
-        game.todoQueue.push(() => {
-          changeCard(game, game.players[i], x)
+  let listenners: any = []
+  Promise.race([
+    Promise.all(game.players.map((player, i) => new Promise((resolve, reject) => {
+      //30秒之前双方都交换完成则提前进入回合阶段
+      const listenner = (data: any = {}) => {
+        const cardIndexes: number[] = data.cardIndexes || []
+        cardIndexes.forEach((x) => {
+          game.todoQueue.push(() => {
+            changeCard(game.players[i], x)
+          })
         })
-      })
-      resolve()
+        resolve()
+      }
+      const name = `player_${i}:${UserActionEnums.ChangeCards}`
+      listenners.push([name, listenner])
+      game.once(name, listenner)
+    })))
+    ,
+    //30秒内有效否则换牌信号会被丢弃
+    timeoutPromise(config.initCardChangeTimeout)
+  ]).then(() => {
+    listenners.forEach((x: any) => {
+      game.removeListener(x[0], x[1])
     })
-  })))]).then(() => {
 
     game.emit(
       'notify',

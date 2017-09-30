@@ -72,6 +72,14 @@ export default class Game extends EventEmitter {
   currentPlayer: Player
 
   /**
+   * 游戏结束
+   * 
+   * @type {boolean}
+   * @memberof Game
+   */
+  gameover: boolean = false
+
+  /**
    * Creates an instance of Game.
    * @param {Object} [config=defaultConfig] 
    * @memberof Game
@@ -82,34 +90,35 @@ export default class Game extends EventEmitter {
       return new Player(this, x.hero, x.cards, i)
     })
     this.players.forEach((x) => x.game = this)
-    setTimeout(() => {
-      gameStart(this)
-      this.tick()
-    }, 100)
   }
 
-  tick() {
+  async start() {
+    gameStart(this)
+    while (!this.gameover) {
+      await this.tick()
+    }
+  }
+
+  async tick() {
     //没有事做了等一下再试
     if (!this.todoQueue.length) {
-      setTimeout(() => {
-        this.tick()
-      }, 100)
-      return
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve()
+        }, 100)
+      })
     }
 
     //处理
     const fn = this.todoQueue.shift()
     const result = fn()
 
-    if (result) {
+    if (result instanceof Promise) {
       //异步
-      result.then(() => {
-        this.tick()
-      })
+      return result
     } else {
       //同步
-      this.tick()
+      return Promise.resolve()
     }
   }
-
 }

@@ -11,12 +11,7 @@ export default function getBuffsByType(type: string, player: Player) {
 function getPlayerBuffsByType(type: string, player: Player) {
 
   let buffs: Buff[] = []
-  buffs = buffs.concat(player.buffs.filter((x) => (x.type === type)))
-  buffs = buffs.concat(player.hero.buffs.filter((x) => (x.type === type)))
-  buffs = buffs.concat(player.weapon.buffs.filter((x) => (x.type === type)))
-  player.fieldServants.forEach((servant) => {
-    buffs = buffs.concat(servant.buffs.filter((x) => (x.type === type)))
-  })
+  buffs = buffs.concat()
 
   return buffs
 }

@@ -116,4 +116,20 @@ export default class Player extends Trigger {
   getEnemy() {
     return this.game.players.filter((x) => x !== this)[0]
   }
+
+  getBuffBytType(type: string) {
+    return this.buffs.filter((x) => (x.type === type))
+  }
+
+  removeBuff(buff: Buff) {
+    const index = this.buffs.indexOf(buff)
+    if (index >= 0) {
+      this.buffs.splice(index, 1)
+    }
+  }
+
+  removeBuffByType(type: string) {
+    const buffs = this.getBuffBytType(type)
+    buffs.forEach((b) => this.removeBuff(b))
+  }
 }
