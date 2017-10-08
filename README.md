@@ -15,3 +15,10 @@ game.start()
 ```
 
 ![example](./src/test/test.png)
+
+## a lot work to do
+
+- Minions
+- Spells
+- Weapons
+- more Heros and Hero Skills 
