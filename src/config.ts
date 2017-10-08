@@ -19,7 +19,7 @@ const playerTurnTimeout = 30000
 /**
  * 玩家回合倒计时：15秒
  */
-const playerTurnCountingTimeout = 30000
+const playerTurnCountingTimeout = 15000
 
 /**
  * 上回合没有操作的，直接15秒

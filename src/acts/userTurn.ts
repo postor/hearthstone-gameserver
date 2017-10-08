@@ -10,6 +10,10 @@ import UserActionEnum from '../utils/UserActionEnum'
 import useCard from './useCard'
 import heroSkill from './heroSkill'
 import playerAttark from './playerAttark'
+import endTurn from './endTurn'
+import drawCard from './drawCard'
+import addPlayerBuff from './addPlayerBuff'
+import { BuffEnum } from '../buffs'
 
 export default function (game: Game) {
   const player = game.currentPlayer
@@ -20,6 +24,11 @@ export default function (game: Game) {
       NotifyEnum.turnUser,
     )
   )
+
+  //抽牌
+  game.todoQueue.push(() => {
+    drawCard(player)
+  })
 
 
   //上一回合没有操作，则直接进入倒计时，否则等待15s后进入倒数
@@ -52,7 +61,7 @@ export default function (game: Game) {
           game.emit(
             'notify',
             new Notify(
-              `${config.playerTurnCountingTimeout}s counting! player${player.id} turn ${game.turn}`,
+              `[no action last turn]${config.playerTurnCountingTimeout}s counting! player${player.id} turn ${game.turn}`,
               NotifyEnum.timeOutCounting,
               config.playerTurnCountingTimeout
             )
@@ -60,23 +69,51 @@ export default function (game: Game) {
           return timeoutPromise(config.playerTurnCountingTimeout)
         }
         //用户无操作
+        addPlayerBuff(player, BuffEnum.NoAction)
         return false
       }),
       //用户结束回合
       playerEndTurn.promise
-    ])
+    ]).then(() => {
+      cleanAndTurnEnd(toClean)
+    })
   } else {
+    //假设用户无操作，有操作会自动移除
+    addPlayerBuff(player, BuffEnum.NoAction)
+    const wait30 = waitPlayerAction(player, config.playerTurnTimeout)
+    toClean.push(wait30.clean)
+    let playerEnded = false
     Promise.race([
       //30秒结束
-      timeoutPromise(config.playerTurnTimeout - config.playerTurnCountingTimeout)
-        .then(() => {
-          return timeoutPromise(config.playerTurnCountingTimeout)
-        }),
+      wait30.promise,
+      //15秒提示
+      timeoutPromise(config.playerTurnTimeout - config.playerTurnCountingTimeout).then(() => {
+        if (!playerEnded) {
+          game.emit(
+            'notify',
+            new Notify(
+              `${config.playerTurnCountingTimeout}s counting! player${player.id} turn ${game.turn}`,
+              NotifyEnum.timeOutCounting,
+              config.playerTurnCountingTimeout
+            )
+          )
+        }
+      }),
       //用户结束回合
-      playerEndTurn.promise
-    ])
+      playerEndTurn.promise.then(() => {
+        playerEnded = true
+      })
+    ]).then(() => {
+      cleanAndTurnEnd(toClean)
+    })
   }
 
+  function cleanAndTurnEnd(arr: any[]) {
+    arr.map((x) => x())
+    game.todoQueue.push(() => {
+      endTurn(game)
+    })
+  }
 }
 
 /**
@@ -89,12 +126,15 @@ function waitPlayerAction(player: Player, timeout: number) {
   let result = false
   const actions = {
     [UserActionEnum.UseCard]: (data: any) => game.todoQueue.push(() => {
+      player.removeBuffByType(BuffEnum.NoAction)
       useCard(player, data)
     }),
     [UserActionEnum.HeroSkill]: (data: any) => game.todoQueue.push(() => {
+      player.removeBuffByType(BuffEnum.NoAction)
       heroSkill(player, data)
     }),
     [UserActionEnum.PlayerAttark]: (data: any) => game.todoQueue.push(() => {
+      player.removeBuffByType(BuffEnum.NoAction)
       playerAttark(player, data)
     }),
   }
@@ -144,6 +184,7 @@ function waitPlayerEndTurn(player: Player) {
   const name = `player_${player.id}:${UserActionEnum.EndTurn}`
   const promise = new Promise((resolve, reject) => {
     listenner = (data: any) => {
+      player.removeBuffByType(BuffEnum.NoAction)
       resolve(true)
     }
     game.once(name, listenner)

@@ -36,6 +36,14 @@ export default function (game: Game) {
 
   //roll first player
   const firstPlayerIndex = Math.round(Math.random())
+  game.emit(
+    'notify',
+    new Notify(
+      `first turn player is player${firstPlayerIndex}`,
+      NotifyEnum.firstTurnPlayer,
+      firstPlayerIndex
+    )
+  )
   game.currentPlayer = game.players[firstPlayerIndex]
   game.todoQueue.unshift(() => {
     drawCard(game.currentPlayer.getEnemy())

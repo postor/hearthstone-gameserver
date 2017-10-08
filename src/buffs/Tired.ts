@@ -5,7 +5,7 @@ export default class Tired extends Base {
   player: Player
   emptyDrawCount: number = 0
 
-  constructor(player: Player, emptyDrawCount: number) {
+  constructor(player: Player, emptyDrawCount: number = 0) {
     super(player)
     this.type = 'Tired'
     this.emptyDrawCount = emptyDrawCount

@@ -1,24 +1,13 @@
-
-/**
- * 手牌已满，卡牌销毁
- */
 const cardDestoriedForHandFull = 'cardDestoriedForHandFull'
-
 const cardDraw = 'cardDraw'
-
 const cardExchanged = 'cardExchanged'
-
 const gameStart = 'gameStart'
-
+const firstTurnPlayer = 'firstTurnPlayer'
 const initCardExchangeEnd = 'initCardExchangeEnd'
 const initCardExchanged = 'initCardExchanged'
-
 const turnBefore = 'turnBefore'
-
 const turnUser = 'turnUser'
-
 const turnEnd = 'turnEnd'
-
 const noActionTimeOutCounting = 'noActionTimeOutCounting'
 const timeOutCounting = 'timeOutCounting'
 const playerUseCard = 'playerUseCard'
@@ -40,4 +29,5 @@ export default {
   playerUseCard,
   playerUseSkill,
   playerAttark,
+  firstTurnPlayer,
 }
