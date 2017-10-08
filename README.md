@@ -14,4 +14,4 @@ game.addListener('notify', (data) => {
 game.start()
 ```
 
-[example](./src/test/test.png)
+![example](./src/test/test.png)
