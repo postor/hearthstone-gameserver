@@ -23,7 +23,7 @@ export default class Player extends Trigger {
    * @type {number}
    * @memberof Player
    */
-  health: number
+  health: number = 30
 
   /**
    * 英雄

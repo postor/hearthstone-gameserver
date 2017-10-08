@@ -13,7 +13,6 @@ import playerAttark from './playerAttark'
 import endTurn from './endTurn'
 import drawCard from './drawCard'
 import addPlayerBuff from './addPlayerBuff'
-import { BuffEnum } from '../buffs'
 
 export default function (game: Game) {
   const player = game.currentPlayer
@@ -38,12 +37,12 @@ export default function (game: Game) {
 
   const playerEndTurn = waitPlayerEndTurn(player)
   toClean.push(playerEndTurn.clean)
-
+  console.log(`player${player.id} has buff TurnWithNoAction count:${buffs.length}`)
   if (buffs.length) {
     game.emit(
       'notify',
       new Notify(
-        `${config.playerTurnCountingNoActionTimeout}s counting!(last turn no action) player${player.id} turn ${game.turn}`,
+        `[no action last turn]${config.playerTurnCountingNoActionTimeout}s counting! player${player.id} turn ${game.turn}`,
         NotifyEnum.noActionTimeOutCounting,
         config.playerTurnCountingNoActionTimeout
       )
@@ -61,15 +60,13 @@ export default function (game: Game) {
           game.emit(
             'notify',
             new Notify(
-              `[no action last turn]${config.playerTurnCountingTimeout}s counting! player${player.id} turn ${game.turn}`,
+              `${config.playerTurnCountingTimeout}s counting! player${player.id} turn ${game.turn}`,
               NotifyEnum.timeOutCounting,
               config.playerTurnCountingTimeout
             )
           )
           return timeoutPromise(config.playerTurnCountingTimeout)
         }
-        //用户无操作
-        addPlayerBuff(player, BuffEnum.NoAction)
         return false
       }),
       //用户结束回合
@@ -79,7 +76,7 @@ export default function (game: Game) {
     })
   } else {
     //假设用户无操作，有操作会自动移除
-    addPlayerBuff(player, BuffEnum.NoAction)
+    addPlayerBuff(player, BuffTypeEnum.TurnWithNoAction)
     const wait30 = waitPlayerAction(player, config.playerTurnTimeout)
     toClean.push(wait30.clean)
     let playerEnded = false
@@ -126,15 +123,15 @@ function waitPlayerAction(player: Player, timeout: number) {
   let result = false
   const actions = {
     [UserActionEnum.UseCard]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffEnum.NoAction)
+      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       useCard(player, data)
     }),
     [UserActionEnum.HeroSkill]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffEnum.NoAction)
+      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       heroSkill(player, data)
     }),
     [UserActionEnum.PlayerAttark]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffEnum.NoAction)
+      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       playerAttark(player, data)
     }),
   }
@@ -184,7 +181,7 @@ function waitPlayerEndTurn(player: Player) {
   const name = `player_${player.id}:${UserActionEnum.EndTurn}`
   const promise = new Promise((resolve, reject) => {
     listenner = (data: any) => {
-      player.removeBuffByType(BuffEnum.NoAction)
+      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       resolve(true)
     }
     game.once(name, listenner)

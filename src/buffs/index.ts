@@ -1,18 +1,16 @@
 import Tired from './Tired'
-import NoAction from './NoAction'
+import TurnWithNoAction from './TurnWithNoAction'
 import Player from '../Player'
+import BuffTypeEnum from '../utils/BuffTypeEnum'
 
-export const BuffEnum = {
-  NoAction: 'NoAction',
-  Tired: 'Tired',
-}
+export const BuffEnum = BuffTypeEnum
 
-export const map:any = {
-  NoAction,
+export const map: any = {
+  TurnWithNoAction,
   Tired,
 }
 
-export default function getBuff(name:string,player:Player){
+export default function getBuff(name: string, player: Player) {
   const Buff = map[name]
   return new Buff(player)
 }

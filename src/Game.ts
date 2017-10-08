@@ -10,6 +10,7 @@ const defaultConfig = {
       hero: 'Mage',
       cards: [
         'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
+        'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos',
         'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
       ],
     },
@@ -17,6 +18,7 @@ const defaultConfig = {
       hero: 'Mage',
       cards: [
         'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
+        'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos',
         'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
       ],
     }

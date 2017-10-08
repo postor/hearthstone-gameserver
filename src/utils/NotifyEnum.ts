@@ -1,5 +1,6 @@
 const cardDestoriedForHandFull = 'cardDestoriedForHandFull'
 const cardDraw = 'cardDraw'
+const cardDrop = 'cardDrop'
 const cardExchanged = 'cardExchanged'
 const gameStart = 'gameStart'
 const firstTurnPlayer = 'firstTurnPlayer'
@@ -13,10 +14,13 @@ const timeOutCounting = 'timeOutCounting'
 const playerUseCard = 'playerUseCard'
 const playerUseSkill = 'playerUseSkill'
 const playerAttark = 'playerAttark'
+const playerDamage = 'playerDamage'
+const playerDie = 'playerDie'
 
 export default {
   cardDestoriedForHandFull,
   cardDraw,
+  cardDrop,
   cardExchanged,
   gameStart,
   initCardExchangeEnd,
@@ -30,4 +34,6 @@ export default {
   playerUseSkill,
   playerAttark,
   firstTurnPlayer,
+  playerDamage,
+  playerDie,
 }
