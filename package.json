@@ -2,7 +2,7 @@
   "name": "hearthstone-gameserver",
   "version": "1.0.0",
   "description": "game server for hearthstone",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "tsc && node dist/test/index.js"

@@ -2,15 +2,16 @@
 import Player from '../Player'
 import Notify from '../notifys/Base'
 import NotifyEnum from '../utils/NotifyEnum'
+import playerDie from './playerDie'
 
 
 export default function (player: Player, damage: number, cause: string) {
-  //在这里可以避免伤害，比如冰箱奥秘 
+  //prevent damage if you got secret
 
-  //处理伤害
+  //deal damage
   player.health -= damage
 
-  //通知
+  //notify
   player.game.emit(
     'notify',
     new Notify(
@@ -20,15 +21,10 @@ export default function (player: Player, damage: number, cause: string) {
   )
 
 
-  //判定死亡，游戏结束
+  //die
   if (player.health <= 0) {
-    player.game.emit(
-      'notify',
-      new Notify(
-        `player${player.id} die and player${player.getEnemy().id} win!`,
-        NotifyEnum.playerDie,
-      )
-    )
-    process.exit()
+    player.game.todoQueue.push(() => {
+      playerDie(player)
+    })
   }
 }
