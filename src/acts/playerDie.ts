@@ -11,4 +11,5 @@ export default (player: Player) => {
       player.id,
     )
   )
+  player.game.gameover = true
 }
