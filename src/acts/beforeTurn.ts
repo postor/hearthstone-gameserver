@@ -1,6 +1,6 @@
-import Game from '../Game'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Game } from '../Game'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 import userTurn from './userTurn'
 
 export default function (game: Game) {
@@ -9,12 +9,13 @@ export default function (game: Game) {
     new Notify(
       `before turn ${game.turn}`,
       NotifyEnum.turnBefore,
+      game.currentPlayer.id,
     ).toObject()
-  )  
+  )
 
   //triggers before turn
 
-  
+
   game.todoQueue.push(() => {
     userTurn(game)
   })

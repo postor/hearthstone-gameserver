@@ -1,4 +1,4 @@
-import Game from '../Game'
+import { Game } from '../Game'
 import { default as TriggerEnum, getArray as getTriggerEnumArray } from '../utils/TriggerEnum'
 import {
   BeforeAttark, DrawCard, Harm, Kill,

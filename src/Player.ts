@@ -1,5 +1,5 @@
 import Hero from './heros/Base'
-import Game from './Game'
+import { Game } from './Game'
 import Card from './cards/Base'
 import Servant from './servants/Base'
 import Trigger from './triggers/Base'

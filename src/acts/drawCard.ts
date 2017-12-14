@@ -4,8 +4,8 @@ import playerTired from './playerTired'
 import addCard from './addCard'
 import UserActionEnums from '../utils/UserActionEnum'
 import shuffle from '../utils/shuffle'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 
 export default function (player: Player) {
   //check empty
@@ -26,6 +26,7 @@ export default function (player: Player) {
       new Notify(
         `card ${card.title} destoried forHand full`,
         NotifyEnum.cardDestoriedForHandFull,
+        player.id,
         card
       ).toObject()
     )

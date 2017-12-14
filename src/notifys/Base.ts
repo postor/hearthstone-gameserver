@@ -1,12 +1,14 @@
-export default class Base {
+export class Notify {
   message: string
   type: string
   data: any
+  userId: number
 
-  constructor(message: string, type: string, data: any = undefined) {
+  constructor(message: string, type: string, userId: number, data: any = undefined) {
     this.message = message
     this.type = type
     this.data = data
+    this.userId = userId
   }
 
   fromObject(obj: any) {
@@ -21,6 +23,7 @@ export default class Base {
       type: this.type,
       message: this.message,
       data,
+      userId: this.userId,
     }
   }
 }

@@ -1,6 +1,6 @@
-import Game from '../Game'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Game } from '../Game'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 
 import beforeTurn from './beforeTurn'
 
@@ -11,6 +11,7 @@ export default function (game: Game) {
     new Notify(
       `end turn ${game.turn + 1}`,
       NotifyEnum.turnEnd,
+      game.currentPlayer.id,
     ).toObject()
   )
 

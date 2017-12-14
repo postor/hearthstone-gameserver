@@ -1,12 +1,12 @@
-import Game from '../Game'
+import { Game } from '../Game'
 import changeCard from './changeCard'
 import drawCard from './drawCard'
 import addCardByName from './addCardByName'
 import beforeTurn from './beforeTurn'
 import shuffle from '../utils/shuffle'
 import config from '../config'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 import CardFromData from '../utils/CardFromData'
 import UserActionEnums from '../utils/UserActionEnum'
 import timeoutPromise from '../utils/timeoutPromise'
@@ -18,6 +18,7 @@ export default function (game: Game) {
     new Notify(
       `game start`,
       NotifyEnum.gameStart,
+      game.currentPlayer.id,
     )
   )
   //shuffle first

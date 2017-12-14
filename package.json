@@ -1,11 +1,12 @@
 {
   "name": "hearthstone-gameserver",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "game server for hearthstone",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "tsc && node dist/test/index.js"
+    "build": "tsc -d",
+    "test": "tsc -d && node dist/test/index.js"
   },
   "repository": {
     "type": "git",

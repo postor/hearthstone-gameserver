@@ -1,8 +1,8 @@
-import Game from '../Game'
+import { Game } from '../Game'
 import Player from '../Player'
 import config from '../config'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 import BuffTypeEnum from '../utils/BuffTypeEnum'
 import timeoutPromise from '../utils/timeoutPromise'
 import UserActionEnum from '../utils/UserActionEnum'
@@ -21,6 +21,7 @@ export default function (game: Game) {
     new Notify(
       `player${player.id} turn ${game.turn}`,
       NotifyEnum.turnUser,
+      player.id,
     )
   )
 

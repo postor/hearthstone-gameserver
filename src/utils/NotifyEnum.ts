@@ -17,7 +17,7 @@ const playerAttark = 'playerAttark'
 const playerDamage = 'playerDamage'
 const playerDie = 'playerDie'
 
-export default {
+export const NotifyEnum = {
   cardDestoriedForHandFull,
   cardDraw,
   cardDrop,

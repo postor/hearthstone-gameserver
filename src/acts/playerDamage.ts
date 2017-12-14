@@ -1,7 +1,7 @@
 
 import Player from '../Player'
-import Notify from '../notifys/Base'
-import NotifyEnum from '../utils/NotifyEnum'
+import { Notify } from '../notifys/Base'
+import { NotifyEnum } from '../utils/NotifyEnum'
 import playerDie from './playerDie'
 
 
@@ -17,9 +17,9 @@ export default function (player: Player, damage: number, cause: string) {
     new Notify(
       `player${player.id} damaged ${damage} health(current:${player.health}) because ${cause}`,
       NotifyEnum.playerDamage,
+      player.id,
     )
   )
-
 
   //die
   if (player.health <= 0) {

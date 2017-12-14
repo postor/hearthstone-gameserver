@@ -32,7 +32,7 @@ const defaultConfig = {
  * @class Game
  * @extends {EventEmitter}
  */
-export default class Game extends EventEmitter {
+export class Game extends EventEmitter {
   /**
    * 玩家列表
    * 
