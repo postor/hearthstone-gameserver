@@ -3,7 +3,7 @@ import Player from '../Player'
 import { Notify } from '../notifys/Base'
 import { NotifyEnum } from '../utils/NotifyEnum'
 import TargetTypeEnum from '../utils/TargetTypeEnum'
-import getTargetArray from '../utils/getTargetArray'
+import { getTargetArray } from '../utils/getTargetArray'
 import playerFrost from './playerFrost'
 import servantFrost from './servantFrost'
 

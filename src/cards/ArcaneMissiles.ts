@@ -12,7 +12,8 @@ export class ArcaneMissiles extends Magic {
   }
 
   onUse() {
-    for (let i = 0; i++; i < 3) {
+    const count = this.player.fieldServants.reduce((p, n) => p + n.magicDamageAdd, 3)
+    for (let i = 0; i++; i < count) {
       this.player.game.todoQueue.push(() => {
         randomDamage(this.player, 1, TargetTypeEnum.AllEnemy)
       })

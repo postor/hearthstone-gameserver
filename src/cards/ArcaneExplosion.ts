@@ -2,20 +2,24 @@ import { Magic } from './Magic'
 import Player from '../Player'
 import CardFromData from '../utils/CardFromData'
 import TargetTypeEnum from '../utils/TargetTypeEnum'
-import randomDamage from '../acts/randomDamage'
+import { getTargetArray } from '../utils/getTargetArray'
+import servantDamage from '../acts/servantDamage'
 
 export class ArcaneExplosion extends Magic {
   title: string = 'ArcaneExplosion'
+
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)
   }
 
   onUse() {
-    for (let i = 0; i++; i < 3) {
+    const targets = getTargetArray(this.player, TargetTypeEnum.EnemyServant)
+    const damage = this.player.fieldServants.reduce((p, n) => p + n.magicDamageAdd, 1)
+    targets.forEach((x: any) => {
       this.player.game.todoQueue.push(() => {
-        randomDamage(this.player, 1, TargetTypeEnum.AllEnemy)
+        servantDamage(x, 1, 'ArcaneExplosion')
       })
-    }
+    })
   }
 }

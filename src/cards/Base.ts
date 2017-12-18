@@ -2,7 +2,7 @@ import Player from '../Player'
 import CardFromData from '../utils/CardFromData'
 import Trigger from '../triggers/Base'
 import Buff from '../buffs/Base'
-import Servant from '../servants/Base'
+import { Minion as Servant } from '../minions/Base'
 
 export class Card extends Trigger {
   static key: string
@@ -12,6 +12,9 @@ export class Card extends Trigger {
   from: CardFromData
   buffs: Buff[]
   servant: Servant
+
+  needTarget: boolean = false
+  needPosition: boolean = false
 
   constructor(player: Player, from: CardFromData) {
     super(player.game)

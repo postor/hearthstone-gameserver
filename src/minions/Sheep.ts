@@ -1,10 +1,10 @@
-import Base from './Base'
+import { Minion } from './Base'
 import Player from '../Player'
 import CardFromData from '../utils/CardFromData'
 import TargetTypeEnum from '../utils/TargetTypeEnum'
 import randomDamage from '../acts/randomDamage'
 
-export class Sheep extends Base {
+export class Sheep extends Minion {
   title = 'Sheep'
 
   attark = 1

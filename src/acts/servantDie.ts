@@ -1,4 +1,4 @@
-import Servant from '../servants/Base'
+import { Minion as Servant } from '../minions/Base'
 
 import { Notify } from '../notifys/Base'
 import { NotifyEnum } from '../utils/NotifyEnum'

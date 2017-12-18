@@ -6,8 +6,8 @@ import playerDamage from '../acts/playerDamage'
 import servantDamage from '../acts/servantDamage'
 import playerFrost from '../acts/playerFrost'
 import servantFrost from '../acts/servantFrost'
-import Servant from '../servants/Base'
-import { Sheep } from '../servants/Sheep'
+import { Minion as Servant } from '../minions/Base'
+import { Sheep } from '../minions/Sheep'
 
 export class Polymorph extends Magic {
   title = 'Polymorph'

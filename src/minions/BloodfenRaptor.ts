@@ -1,7 +1,7 @@
-import Base from './Base'
+import { Minion } from './Base'
 import Player from '../Player'
 
-export class BloodfenRaptor extends Base {
+export class BloodfenRaptor extends Minion {
   title = 'BloodfenRaptor'
 
   attark = 3

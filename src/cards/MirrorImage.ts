@@ -3,7 +3,7 @@ import Player from '../Player'
 import CardFromData from '../utils/CardFromData'
 import TargetTypeEnum from '../utils/TargetTypeEnum'
 import addServant from '../acts/addServant'
-import { MirrorImage as MirrorImageServant } from '../servants/MirrorImage'
+import { MirrorImage as MirrorImageServant } from '../minions/MirrorImage'
 
 export class MirrorImage extends Magic {
   title: string = 'MirrorImage'

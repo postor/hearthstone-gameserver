@@ -1,7 +1,8 @@
 import Player from "../Player";
 import TargetTypeEnum from "./TargetTypeEnum";
+import { Minion } from '../minions/Base'
 
-export default (player: Player, targetType: TargetTypeEnum)=> {
+export const getTargetArray = (player: Player, targetType: TargetTypeEnum) => {
   let arr = []
   if (targetType & TargetTypeEnum.OurPlayer) {
     arr.push(player)

@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
 import Player from './Player'
-import {Card} from './cards/Base'
+import { Card } from './cards/Base'
 import DeadQueueItem from './utils/DeadQueueItem'
 import gameStart from './acts/gameStart'
 
@@ -9,17 +9,17 @@ const defaultConfig = {
     {
       hero: 'Mage',
       cards: [
-        'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
-        'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos',
-        'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
+        'ArcaneExplosion', 'ArcaneExplosion', 'ArcaneIntellect', 'ArcaneIntellect', 'FrostBolt', 'FrostBolt',
+        'BloodmageThalnos', 'BloodmageThalnos', 'ArcaneMissiles', 'ArcaneMissiles',
+        'Polymorph', 'Polymorph', 'FireBall', 'FireBall', 'MirrorImage', 'MirrorImage', 'FrostNova', 'FrostNova',
       ],
     },
     {
       hero: 'Mage',
       cards: [
-        'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook', 'BabblingBook',
-        'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos', 'BloodmageThalnos',
-        'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer', 'QuestingAdventurer',
+        'ArcaneExplosion', 'ArcaneExplosion', 'ArcaneIntellect', 'ArcaneIntellect', 'FrostBolt', 'FrostBolt',
+        'BloodmageThalnos', 'BloodmageThalnos', 'ArcaneMissiles', 'ArcaneMissiles',
+        'Polymorph', 'Polymorph', 'FireBall', 'FireBall', 'MirrorImage', 'MirrorImage', 'FrostNova', 'FrostNova',
       ],
     }
   ]
@@ -81,6 +81,12 @@ export class Game extends EventEmitter {
    */
   gameover: boolean = false
 
+  _curID: number = 10
+
+  newID() {
+    return this._curID++
+  }
+
   /**
    * Creates an instance of Game.
    * @param {Object} [config=defaultConfig] 
@@ -123,4 +129,6 @@ export class Game extends EventEmitter {
       return Promise.resolve()
     }
   }
+
+
 }

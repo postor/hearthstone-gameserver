@@ -1,7 +1,7 @@
 import Hero from './heros/Base'
 import { Game } from './Game'
 import { Card } from './cards/Base'
-import Servant from './servants/Base'
+import { Minion as Servant } from './minions/Base'
 import Trigger from './triggers/Base'
 import Buff from './buffs/Base'
 import Weapon from './weapons/Base'
