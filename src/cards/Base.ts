@@ -4,7 +4,7 @@ import Trigger from '../triggers/Base'
 import Buff from '../buffs/Base'
 import Servant from '../servants/Base'
 
-export default class CardBase extends Trigger {
+export class Card extends Trigger {
   static key: string
 
   title: string
@@ -23,7 +23,7 @@ export default class CardBase extends Trigger {
 
   }
 
-  onUse() {
+  onUse(target: string = undefined, position: number = undefined) {
 
   }
 

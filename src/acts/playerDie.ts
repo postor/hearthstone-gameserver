@@ -8,7 +8,8 @@ export default (player: Player) => {
     new Notify(
       `player${player.id} die and player${player.getEnemy().id} win!`,
       NotifyEnum.playerDie,
-      player.id,
+      -1,
+      player.id
     )
   )
   player.game.gameover = true

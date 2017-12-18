@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events'
 import Player from './Player'
-import Card from './cards/Base'
+import {Card} from './cards/Base'
 import DeadQueueItem from './utils/DeadQueueItem'
 import gameStart from './acts/gameStart'
 

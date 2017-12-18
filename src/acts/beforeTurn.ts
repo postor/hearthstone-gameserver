@@ -4,12 +4,17 @@ import { NotifyEnum } from '../utils/NotifyEnum'
 import userTurn from './userTurn'
 
 export default function (game: Game) {
+  const player = game.currentPlayer
   game.emit(
     'notify',
     new Notify(
       `before turn ${game.turn}`,
       NotifyEnum.turnBefore,
-      game.currentPlayer.id,
+      player.id,
+      {
+        coin: player.coin,
+        coinMax: player.coinMax
+      }
     ).toObject()
   )
 

@@ -1,6 +1,6 @@
 import Hero from './heros/Base'
 import { Game } from './Game'
-import Card from './cards/Base'
+import { Card } from './cards/Base'
 import Servant from './servants/Base'
 import Trigger from './triggers/Base'
 import Buff from './buffs/Base'
@@ -17,6 +17,7 @@ import getCard from './cards'
  * @extends {Trigger}
  */
 export default class Player extends Trigger {
+  isPlayer = true
   /**
    * 血量
    * 
@@ -24,6 +25,10 @@ export default class Player extends Trigger {
    * @memberof Player
    */
   health: number = 30
+
+  coin: number
+  coinMax: number
+  isFrosted = false
 
   /**
    * 英雄

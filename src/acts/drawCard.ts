@@ -32,13 +32,12 @@ export default function (player: Player) {
     )
     return
   }
-
   //check buffs like copy or modify
 
 
   //add to hand
   player.game.todoQueue.unshift(() => {
-    addCard(player, card)
+    addCard(player, card, NotifyEnum.cardDraw)
   })
 
 }

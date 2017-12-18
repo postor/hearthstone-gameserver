@@ -23,7 +23,7 @@ export default function (player: Player, damage: number, cause: string) {
 
   //die
   if (player.health <= 0) {
-    player.game.todoQueue.push(() => {
+    player.game.todoQueue.unshift(() => {
       playerDie(player)
     })
   }

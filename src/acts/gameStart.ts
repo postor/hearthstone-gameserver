@@ -18,7 +18,7 @@ export default function (game: Game) {
     new Notify(
       `game start`,
       NotifyEnum.gameStart,
-      game.currentPlayer.id,
+      -1
     )
   )
   //shuffle first
@@ -42,8 +42,9 @@ export default function (game: Game) {
     new Notify(
       `first turn player is player${firstPlayerIndex}`,
       NotifyEnum.firstTurnPlayer,
+      -1,
       firstPlayerIndex
-    )
+    ).toObject()
   )
   game.currentPlayer = game.players[firstPlayerIndex]
   game.todoQueue.unshift(() => {
@@ -80,6 +81,7 @@ export default function (game: Game) {
       new Notify(
         `init card exchange end`,
         NotifyEnum.initCardExchangeEnd,
+        game.currentPlayer.id,
       ).toObject()
     )
 

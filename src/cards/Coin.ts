@@ -1,11 +1,16 @@
-import Base from './Base'
+import { Magic } from './Magic'
 import Player from '../Player'
 import CardFromData from '../utils/CardFromData'
+import addPlayerCoin from '../acts/addPlayerCoin'
 
-export default class Coin extends Base {
-  title:string = 'Coin'
+export class Coin extends Magic {
+  title: string = 'Coin'
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)
+  }
+
+  onUse() {
+    addPlayerCoin(this.player, 1)
   }
 }

@@ -16,6 +16,14 @@ const playerUseSkill = 'playerUseSkill'
 const playerAttark = 'playerAttark'
 const playerDamage = 'playerDamage'
 const playerDie = 'playerDie'
+const addCardToHand = 'addCardToHand'
+const playerAddCoin = 'playerAddCoin'
+const servantDamage = 'servantDamage'
+const servantDie = 'servantDie'
+const servantFrosted = 'servantFrosted'
+const playerFrosted = 'playerFrosted'
+const addServant = 'addServant'
+const destoryWeapon = 'destoryWeapon'
 
 export const NotifyEnum = {
   cardDestoriedForHandFull,
@@ -36,4 +44,12 @@ export const NotifyEnum = {
   firstTurnPlayer,
   playerDamage,
   playerDie,
+  addCardToHand,
+  playerAddCoin,
+  servantDamage,
+  servantFrosted,
+  servantDie,
+  playerFrosted,
+  addServant,
+  destoryWeapon,
 }
