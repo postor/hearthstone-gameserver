@@ -61,7 +61,7 @@ export default function (game: Game) {
           )
 
           const { promise, cancle } = cancleableWait(config.playerTurnCountingTimeout)
-          toClean.push(() => cancle()())
+          toClean.push(() => cancle())
           return promise
         }
         return false
@@ -70,7 +70,7 @@ export default function (game: Game) {
       playerEndTurn.promise
     ]).then(() => {
       cleanAndTurnEnd(toClean)
-    })
+    }).catch(()=>{})
   } else {
     //假设用户无操作，有操作会自动移除
     addPlayerBuff(player, BuffTypeEnum.TurnWithNoAction)
@@ -78,7 +78,7 @@ export default function (game: Game) {
     toClean.push(wait30.clean)
     let playerEnded = false
     const { promise, cancle } = cancleableWait(config.playerTurnTimeout - config.playerTurnCountingTimeout)
-    toClean.push(() => cancle()())
+    toClean.push(() => cancle())
     Promise.race([
       //30秒结束
       wait30.promise,
@@ -101,7 +101,7 @@ export default function (game: Game) {
       })
     ]).then(() => {
       cleanAndTurnEnd(toClean)
-    })
+    }).catch(()=>{})
 
     game.emit(
       'notify',
@@ -111,13 +111,17 @@ export default function (game: Game) {
         player.id,
       )
     )
+    game.setToClean(()=>cleanAndTurnEnd(toClean))
   }
+
 
   function cleanAndTurnEnd(arr: any[]) {
     arr.map((x) => x())
-    game.todoQueue.push(() => {
-      endTurn(game)
-    })
+    if (!game.gameover) {
+      game.todoQueue.push(() => {
+        endTurn(game)
+      })
+    }
   }
 }
 
@@ -169,7 +173,7 @@ function waitPlayerAction(player: Player, timeout: number) {
 
   return {
     promise,
-    clean: ()=>cancle()(),
+    clean: () => cancle(),
   }
 }
 

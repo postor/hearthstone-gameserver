@@ -13,9 +13,8 @@ const aiPlayer1 = new SimpleAI(game, 1)
 game.start().then(() => {
   aiPlayer0.unregist()
   aiPlayer1.unregist()
-  game.removeAllListeners()
+  game.clean()
   console.log('exit!')
-  console.log(getArr())
 }).catch((e) => {
   console.log(e)
 })

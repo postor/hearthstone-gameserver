@@ -75,7 +75,7 @@ export default async function (game: Game) {
     //30秒内有效否则换牌信号会被丢弃
     promise
   ]).then(() => {
-    cancle()()
+    cancle()
     listenners.forEach((x: any) => {
       game.removeListener(x[0], x[1])
     })

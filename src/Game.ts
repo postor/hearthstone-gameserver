@@ -83,6 +83,17 @@ export class Game extends EventEmitter {
 
   _curID: number = 10
 
+  _toClean: any = () => { }
+
+  setToClean(x: any) {
+    this._toClean = x
+  }
+  
+  clean() {
+    this._toClean()
+    this.removeAllListeners()
+  }
+
   newID() {
     return this._curID++
   }
