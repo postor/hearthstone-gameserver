@@ -6,6 +6,7 @@ import areaFrost from '../acts/areaFrost'
 
 export class FrostNova extends Magic {
   title: string = 'FrostNova'
+  cost = 3
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

@@ -1,4 +1,4 @@
-const UserActionEnum = {
+export const UserActionEnum = {
   ChangeCards: 'ChangeCards',
   UseCard: 'UseCard',
   HeroSkill: 'HeroSkill',
@@ -6,5 +6,3 @@ const UserActionEnum = {
   ServantAttark: 'ServantAttark',
   EndTurn: 'EndTurn',
 }
-
-export default UserActionEnum

@@ -26,8 +26,8 @@ export default class Player extends Trigger {
    */
   health: number = 30
 
-  coin: number
-  coinMax: number
+  coin: number = 0
+  coinMax: number = 0
   isFrosted = false
 
   /**

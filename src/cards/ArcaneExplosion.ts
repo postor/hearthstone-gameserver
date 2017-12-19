@@ -7,6 +7,7 @@ import servantDamage from '../acts/servantDamage'
 
 export class ArcaneExplosion extends Magic {
   title: string = 'ArcaneExplosion'
+  cost = 2
 
 
   constructor(player: Player, from: CardFromData) {

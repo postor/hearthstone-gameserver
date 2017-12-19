@@ -8,11 +8,10 @@ import config from '../config'
 import { Notify } from '../notifys/Base'
 import { NotifyEnum } from '../utils/NotifyEnum'
 import CardFromData from '../utils/CardFromData'
-import UserActionEnums from '../utils/UserActionEnum'
-import timeoutPromise from '../utils/timeoutPromise'
+import { UserActionEnum } from '../utils/UserActionEnum'
+import { cancleableWait } from '../utils/cancleableWait'
 
-
-export default function (game: Game) {
+export default async function (game: Game) {
   game.emit(
     'notify',
     new Notify(
@@ -37,21 +36,25 @@ export default function (game: Game) {
 
   //roll first player
   const firstPlayerIndex = Math.round(Math.random())
-  game.emit(
-    'notify',
-    new Notify(
-      `first turn player is player${firstPlayerIndex}`,
-      NotifyEnum.firstTurnPlayer,
-      -1,
-      firstPlayerIndex
-    ).toObject()
-  )
   game.currentPlayer = game.players[firstPlayerIndex]
   game.todoQueue.unshift(() => {
     drawCard(game.currentPlayer.getEnemy())
   })
+  game.todoQueue.push(() => {
+    game.emit(
+      'notify',
+      new Notify(
+        `first turn player is player${firstPlayerIndex}`,
+        NotifyEnum.firstTurnPlayer,
+        -1,
+        firstPlayerIndex
+      ).toObject()
+    )
+  })
 
   let listenners: any = []
+  let rtn: any = await cancleableWait(config.initCardChangeTimeout)
+  const { promise, cancle } = rtn
   Promise.race([
     Promise.all(game.players.map((player, i) => new Promise((resolve, reject) => {
       //30秒之前双方都交换完成则提前进入回合阶段
@@ -64,14 +67,15 @@ export default function (game: Game) {
         })
         resolve()
       }
-      const name = `player_${i}:${UserActionEnums.ChangeCards}`
+      const name = `player_${i}:${UserActionEnum.ChangeCards}`
       listenners.push([name, listenner])
       game.once(name, listenner)
     })))
     ,
     //30秒内有效否则换牌信号会被丢弃
-    timeoutPromise(config.initCardChangeTimeout)
+    promise
   ]).then(() => {
+    cancle()()
     listenners.forEach((x: any) => {
       game.removeListener(x[0], x[1])
     })
@@ -95,4 +99,6 @@ export default function (game: Game) {
       beforeTurn(game)
     })
   }).catch(console.log)
+
+  return true
 }

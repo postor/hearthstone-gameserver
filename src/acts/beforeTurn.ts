@@ -5,6 +5,10 @@ import userTurn from './userTurn'
 
 export default function (game: Game) {
   const player = game.currentPlayer
+  if (player.coinMax < 10) {
+    player.coinMax++
+  }
+  player.coin = player.coinMax
   game.emit(
     'notify',
     new Notify(

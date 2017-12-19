@@ -5,6 +5,7 @@ import drawCard from '../acts/drawCard'
 
 export class ArcaneIntellect extends Magic {
   title: string = 'ArcaneIntellect'
+  cost = 3
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

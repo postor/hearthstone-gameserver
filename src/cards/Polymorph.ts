@@ -11,6 +11,7 @@ import { Sheep } from '../minions/Sheep'
 
 export class Polymorph extends Magic {
   title = 'Polymorph'
+  cost = 4
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

@@ -6,6 +6,7 @@ import randomDamage from '../acts/randomDamage'
 
 export class ArcaneMissiles extends Magic {
   title: string = 'ArcaneMissiles'
+  cost = 1
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

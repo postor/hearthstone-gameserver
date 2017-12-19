@@ -7,6 +7,7 @@ import { MirrorImage as MirrorImageServant } from '../minions/MirrorImage'
 
 export class MirrorImage extends Magic {
   title: string = 'MirrorImage'
+  cost = 1
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

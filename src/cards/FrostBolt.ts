@@ -9,6 +9,7 @@ import servantFrost from '../acts/servantFrost'
 
 export class FrostBolt extends Magic {
   title: string = 'FrostBolt'
+  cost = 2
 
   constructor(player: Player, from: CardFromData) {
     super(player, from)

@@ -4,8 +4,8 @@ import config from '../config'
 import { Notify } from '../notifys/Base'
 import { NotifyEnum } from '../utils/NotifyEnum'
 import BuffTypeEnum from '../utils/BuffTypeEnum'
-import timeoutPromise from '../utils/timeoutPromise'
-import UserActionEnum from '../utils/UserActionEnum'
+import { UserActionEnum } from '../utils/UserActionEnum'
+import { cancleableWait } from '../utils/cancleableWait'
 
 import useCard from './useCard'
 import heroSkill from './heroSkill'
@@ -16,14 +16,7 @@ import addPlayerBuff from './addPlayerBuff'
 
 export default function (game: Game) {
   const player = game.currentPlayer
-  game.emit(
-    'notify',
-    new Notify(
-      `player${player.id} turn ${game.turn}`,
-      NotifyEnum.turnUser,
-      player.id,
-    )
-  )
+
 
   //抽牌
   game.todoQueue.push(() => {
@@ -66,7 +59,10 @@ export default function (game: Game) {
               config.playerTurnCountingTimeout
             )
           )
-          return timeoutPromise(config.playerTurnCountingTimeout)
+
+          const { promise, cancle } = cancleableWait(config.playerTurnCountingTimeout)
+          toClean.push(() => cancle()())
+          return promise
         }
         return false
       }),
@@ -81,11 +77,13 @@ export default function (game: Game) {
     const wait30 = waitPlayerAction(player, config.playerTurnTimeout)
     toClean.push(wait30.clean)
     let playerEnded = false
+    const { promise, cancle } = cancleableWait(config.playerTurnTimeout - config.playerTurnCountingTimeout)
+    toClean.push(() => cancle()())
     Promise.race([
       //30秒结束
       wait30.promise,
-      //15秒提示
-      timeoutPromise(config.playerTurnTimeout - config.playerTurnCountingTimeout).then(() => {
+      //15秒提示      
+      promise.then(() => {
         if (!playerEnded) {
           game.emit(
             'notify',
@@ -104,6 +102,15 @@ export default function (game: Game) {
     ]).then(() => {
       cleanAndTurnEnd(toClean)
     })
+
+    game.emit(
+      'notify',
+      new Notify(
+        `player${player.id} turn ${game.turn}`,
+        NotifyEnum.turnUser,
+        player.id,
+      )
+    )
   }
 
   function cleanAndTurnEnd(arr: any[]) {
@@ -124,15 +131,12 @@ function waitPlayerAction(player: Player, timeout: number) {
   let result = false
   const actions = {
     [UserActionEnum.UseCard]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       useCard(player, data)
     }),
     [UserActionEnum.HeroSkill]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       heroSkill(player, data)
     }),
     [UserActionEnum.PlayerAttark]: (data: any) => game.todoQueue.push(() => {
-      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
       playerAttark(player, data)
     }),
   }
@@ -140,21 +144,19 @@ function waitPlayerAction(player: Player, timeout: number) {
   let toClean: any[] = []
   const game = player.game
 
-  const promise = new Promise((resolve, reject) => {
-    Object.keys(actions).forEach((actionKey) => {
-      const listenner = (data: any) => {
-        actions[actionKey](data)
-        player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
-      }
-      const name = `player_${player.id}:${actionKey}`
-      toClean.push({
-        listenner,
-        name,
-      })
+  const { promise, cancle } = cancleableWait(timeout)
+
+  Object.keys(actions).forEach((actionKey) => {
+    const listenner = (data: any) => {
+      actions[actionKey](data)
+      player.removeBuffByType(BuffTypeEnum.TurnWithNoAction)
+    }
+    const name = `player_${player.id}:${actionKey}`
+    game.addListener(name, listenner)
+    toClean.push({
+      listenner,
+      name,
     })
-    setTimeout(() => {
-      resolve(result)
-    }, timeout)
   })
 
   const clean = () => {
@@ -163,9 +165,11 @@ function waitPlayerAction(player: Player, timeout: number) {
     })
   }
 
+  const p = promise.then(clean).catch(clean)
+
   return {
     promise,
-    clean,
+    clean: ()=>cancle()(),
   }
 }
 

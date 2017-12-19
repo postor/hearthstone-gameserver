@@ -94,6 +94,7 @@ export class Game extends EventEmitter {
    */
   constructor(config: { players: Object[] } = defaultConfig) {
     super()
+    this.setMaxListeners(30)
     this.players = config.players.map((x: { hero: string, cards: string[] }, i) => {
       return new Player(this, x.hero, x.cards, i)
     })
