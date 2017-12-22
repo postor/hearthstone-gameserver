@@ -6,7 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -d",
-    "test": "tsc -d && node dist/test/index.js"
+    "test": "tsc -d && node dist/test/index.js",
+    "testfork": "tsc -d && node dist/test/fork.js"
   },
   "repository": {
     "type": "git",
