@@ -36,6 +36,8 @@ export class Card extends Trigger {
       player: this.player.id,
       from: this.from.toObject(),
       servant,
+      title: this.title,
+      cost: this.cost
     }
   }
 }
