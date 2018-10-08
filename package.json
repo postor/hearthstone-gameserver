@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/postor/hearthstone-gameserver#readme",
   "dependencies": {
+    "@types/events": "^1.2.0",
     "@types/node": "^8.0.31",
     "lodash": "^4.17.4",
     "uuid": "^3.0.1"

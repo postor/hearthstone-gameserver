@@ -1,6 +1,5 @@
 import Player from "../Player";
 import TargetTypeEnum from "./TargetTypeEnum";
-import { Minion } from '../minions/Base'
 
 export const getTargetArray = (player: Player, targetType: TargetTypeEnum) => {
   let arr = []

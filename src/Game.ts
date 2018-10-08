@@ -1,8 +1,8 @@
 import { EventEmitter } from 'events'
 import Player from './Player'
-import { Card } from './cards/Base'
 import DeadQueueItem from './utils/DeadQueueItem'
 import gameStart from './acts/gameStart'
+import { getWaitPromise } from './utils/getWaitPromise'
 
 const defaultConfig = {
   players: [
@@ -88,7 +88,7 @@ export class Game extends EventEmitter {
   setToClean(x: any) {
     this._toClean = x
   }
-  
+
   clean() {
     this._toClean()
     this.removeAllListeners()
@@ -122,11 +122,8 @@ export class Game extends EventEmitter {
   async tick() {
     //没有事做了等一下再试
     if (!this.todoQueue.length) {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          resolve()
-        }, 100)
-      })
+      await getWaitPromise(100)
+      return
     }
 
     //处理
